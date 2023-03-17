@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  DEBUG: "1"
+  DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1 [::1]
+  SECRET_KEY: django-insecure-3i)6^km5oa&l$(douabj+bpd23v40)o2b0-+qq%%dd40$$ir5e
+  SQL_DATABASE: postgres
+  SQL_ENGINE: django.db.backends.postgresql
+  SQL_HOST: db
+  SQL_PASSWORD: postgres
+  SQL_PORT: "5432"
+  SQL_USER: postgres
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-env-dev
+  name: env-dev
