@@ -188,26 +188,26 @@ jobs:
             
 workflows:
   version: 2
-  django-deployment:
+  blogzine-deployment:
     jobs:
-      - terraform-init
-      - terraform-plan:
-          requires: ["terraform-init"]
+      - terraform-initialize
+      - terraform-build:
+          requires: ["terraform-initialize"]
       - hold-apply:
           type: approval
-          requires: ["terraform-plan"]
-      - terraform-apply:
+          requires: ["terraform-build"]
+      - terraform-run:
           requires: ["hold-apply"]
-      - terraform-plan-destroy:
-          requires: ["terraform-appy"]
+      - terraform-build-stop:
+          requires: ["terraform-run"]
       - hold-destroy:
           type: approval
-          requires: ["terraform-plan-destroy"]
-      - terraform-destroy:
+          requires: ["terraform-build-stop"]
+      - terraform-stop:
           requires: ["hold-destroy"]  
-      - build-django-app:
-          requires: ["terraform-apply"]
-#       - deploy-django-app:
-#           requires: ["terraform-apply, build-django-app"]
+      - build-blogzine-app:
+          requires: ["terraform-run"]
+#       - deploy-blogzine-app:
+#           requires: ["terraform-run, build-blogzine-app"]
 #       - deploy-sock-shop:
-#           requires: ["terraform-apply, build-django-app"]
+#           requires: ["terraform-run, build-blogzine-app"]
