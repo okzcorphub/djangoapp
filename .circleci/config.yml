@@ -205,9 +205,9 @@ workflows:
 #           requires: ["terraform-build-stop"]
 #       - terraform-stop:
 #           requires: ["hold-destroy"]  
-       - build-blogzine-app
+#        - build-blogzine-app:
 #          requires: ["terraform-run"]
-#       - deploy-blogzine-app:
+      - deploy-blogzine-app
 #           requires: ["terraform-run, build-blogzine-app"]
-#       - deploy-sock-shop:
+      - deploy-sock-shop
 #           requires: ["terraform-run, build-blogzine-app"]
