@@ -78,7 +78,7 @@ jobs:
           paths:
             - .
       
-  terraform-build-destroy:
+  terraform-build-stop:
     docker:
       - image: docker.mirror.hashicorp.services/hashicorp/terraform:light
     steps:
