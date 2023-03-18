@@ -129,14 +129,14 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t $APP .
+            docker build -t blogzine-web .
       - run:
           name: Push to Docker Hub
           command: |
             echo "$DOCKER_PASSWORD"
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker tag $APP:latest $DOCKER_USERNAME/$APP
-            docker push $DOCKER_USERNAME/$APP
+            docker tag blogzine-web:latest $DOCKER_USERNAME/blogzine-web
+            docker push $DOCKER_USERNAME/blogzine-web
             
   deploy-blogzine-app:
     docker:
@@ -190,23 +190,23 @@ workflows:
   version: 2
   blogzine-deployment:
     jobs:
-      - terraform-initialize
-      - terraform-build:
-          requires: ["terraform-initialize"]
-      - hold-apply:
-          type: approval
-          requires: ["terraform-build"]
-      - terraform-run:
-          requires: ["hold-apply"]
-      - terraform-build-stop:
-          requires: ["terraform-run"]
-      - hold-destroy:
-          type: approval
-          requires: ["terraform-build-stop"]
-      - terraform-stop:
-          requires: ["hold-destroy"]  
-      - build-blogzine-app:
-          requires: ["terraform-run"]
+#       - terraform-initialize
+#       - terraform-build:
+#           requires: ["terraform-initialize"]
+#       - hold-apply:
+#           type: approval
+#           requires: ["terraform-build"]
+#       - terraform-run:
+#           requires: ["hold-apply"]
+#       - terraform-build-stop:
+#           requires: ["terraform-run"]
+#       - hold-destroy:
+#           type: approval
+#           requires: ["terraform-build-stop"]
+#       - terraform-stop:
+#           requires: ["hold-destroy"]  
+       - build-blogzine-app
+#          requires: ["terraform-run"]
 #       - deploy-blogzine-app:
 #           requires: ["terraform-run, build-blogzine-app"]
 #       - deploy-sock-shop:
