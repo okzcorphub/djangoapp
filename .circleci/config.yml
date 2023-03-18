@@ -105,7 +105,7 @@ jobs:
       - run:
           name: terraform destroy
           command: |
-            cd terraform
+#            cd terraform
             terraform apply -auto-approve
 
   build-blogzine-app:
