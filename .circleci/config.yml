@@ -198,16 +198,16 @@ workflows:
 #           requires: ["terraform-build"]
 #       - terraform-run:
 #           requires: ["hold-apply"]
-#       - terraform-build-stop:
+      - terraform-build-stop
 #           requires: ["terraform-run"]
-#       - hold-destroy:
-#           type: approval
-#           requires: ["terraform-build-stop"]
-#       - terraform-stop:
-#           requires: ["hold-destroy"]  
+      - hold-destroy:
+          type: approval
+          requires: ["terraform-build-stop"]
+      - terraform-stop:
+          requires: ["hold-destroy"]  
 #        - build-blogzine-app:
 #          requires: ["terraform-run"]
-      - deploy-blogzine-app
+#       - deploy-blogzine-app
 #           requires: ["terraform-run, build-blogzine-app"]
-      - deploy-sock-shop
+#       - deploy-sock-shop
 #           requires: ["terraform-run, build-blogzine-app"]
