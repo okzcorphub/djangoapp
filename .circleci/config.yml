@@ -106,7 +106,7 @@ jobs:
           name: terraform destroy
           command: |
             cd terraform
-            terraform apply -auto-approve tfdestroy
+            terraform apply -auto-approve
 
   build-blogzine-app:
     docker:
