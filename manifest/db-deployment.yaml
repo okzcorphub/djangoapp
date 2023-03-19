@@ -28,13 +28,29 @@ spec:
       containers:
         - env:
             - name: POSTGRES_DB
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: env-db
             - name: POSTGRES_PASSWORD
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: env-db
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: env-db
             - name: POSTGRES_USER
-              value: postgres
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: env-db
           image: postgres:13.0-alpine
           name: db
+          ports:
+            - containerPort: 80
           resources: {}
           volumeMounts:
             - mountPath: /var/lib/postgresql/data

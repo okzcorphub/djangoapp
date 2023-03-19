@@ -14,7 +14,8 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: web
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
@@ -29,7 +30,7 @@ spec:
       containers:
         - args:
             - python
-            - /code/manage.py
+            - manage.py
             - runserver
             - 0.0.0.0:8000
           env:
@@ -37,51 +38,63 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: DEBUG
-                  name: env-dev
+                  name: env
             - name: DJANGO_ALLOWED_HOSTS
               valueFrom:
                 configMapKeyRef:
                   key: DJANGO_ALLOWED_HOSTS
-                  name: env-dev
+                  name: env
             - name: SECRET_KEY
               valueFrom:
                 configMapKeyRef:
                   key: SECRET_KEY
-                  name: env-dev
+                  name: env
             - name: SQL_DATABASE
               valueFrom:
                 configMapKeyRef:
                   key: SQL_DATABASE
-                  name: env-dev
+                  name: env
             - name: SQL_ENGINE
               valueFrom:
                 configMapKeyRef:
                   key: SQL_ENGINE
-                  name: env-dev
+                  name: env
             - name: SQL_HOST
               valueFrom:
                 configMapKeyRef:
                   key: SQL_HOST
-                  name: env-dev
+                  name: env
             - name: SQL_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   key: SQL_PASSWORD
-                  name: env-dev
+                  name: env
             - name: SQL_PORT
               valueFrom:
                 configMapKeyRef:
                   key: SQL_PORT
-                  name: env-dev
+                  name: env
             - name: SQL_USER
               valueFrom:
                 configMapKeyRef:
                   key: SQL_USER
-                  name: env-dev
+                  name: env
           image: web
           name: web
           ports:
             - containerPort: 8000
           resources: {}
+          volumeMounts:
+            - mountPath: /home/app/web/staticfiles
+              name: static-volume
+            - mountPath: /home/app/web/mediafiles
+              name: media-volume
       restartPolicy: Always
+      volumes:
+        - name: static-volume
+          persistentVolumeClaim:
+            claimName: static-volume
+        - name: media-volume
+          persistentVolumeClaim:
+            claimName: media-volume
 status: {}

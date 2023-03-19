@@ -23,6 +23,8 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.db
+    ports:
+      - 5432:80
   nginx:
     build: ./nginx
     volumes:
